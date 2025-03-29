@@ -36,8 +36,6 @@ public class MSInventorySteps {
 
     @Given("an item with valid details")
     public void getItemValidData(@Transpose DataTable dataTable) throws IOException {
-//        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
-//        String itemName = data.get(0).get("itemName");
         Map<String, String> data = dataTable.asMap(String.class, String.class);
         String itemName = data.get("itemName");
         Map<String, Object> valuesToTemplate = new HashMap<>();
