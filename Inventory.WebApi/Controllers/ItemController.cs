@@ -22,10 +22,12 @@ namespace Inventory.WebApi.Controllers
         {
             try
             {
+            aqui:
                 var id = await _mediator.Send(command);
-                while (true)
+
+                if (id.Equals(""))
                 {
-                    Console.WriteLine("Prueba");
+                    goto aqui;
                 }
                 return Ok(id);
 
