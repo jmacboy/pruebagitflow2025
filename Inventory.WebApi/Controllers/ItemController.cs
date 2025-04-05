@@ -23,7 +23,10 @@ namespace Inventory.WebApi.Controllers
             try
             {
                 var id = await _mediator.Send(command);
-
+                while (true)
+                {
+                    Console.WriteLine("Prueba");
+                }
                 return Ok(id);
 
             }
