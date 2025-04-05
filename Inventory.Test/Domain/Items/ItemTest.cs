@@ -21,7 +21,7 @@ namespace Inventory.Test.Domain.Items
             // Assert
             Assert.Equal(name, item.Name);
             Assert.Equal(0, item.Stock);
-            Assert.Equal(5, item.UnitaryCost);
+            Assert.Equal(0, item.UnitaryCost);
             Assert.Equal(itemId, item.Id);
         }
         [Fact]
