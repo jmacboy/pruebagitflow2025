@@ -22,8 +22,13 @@ namespace Inventory.WebApi.Controllers
         {
             try
             {
+            aqui:
                 var id = await _mediator.Send(command);
 
+                if (id.Equals(""))
+                {
+                    goto aqui;
+                }
                 return Ok(id);
 
             }
