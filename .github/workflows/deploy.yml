@@ -1,0 +1,37 @@
+name: Staging deployment
+
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+          SSH_HOST: ${{ secrets.HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+            Host staging
+              HostName $SSH_HOST
+              User $SSH_USER
+              IdentityFile ~/.ssh/staging.key
+              StrictHostKeyChecking no
+          END
+      - name: Stop the server
+        run: ssh staging 'sudo systemctl stop inventory.service'
+
+      - name: Do deploy
+        run: ssh staging 'cd /var/www/pruebagitflow2025/ && bash deploy.sh'
+      - name: Start the server
+        if: ${{ always() }}
+        run: ssh staging 'sudo systemctl start inventory.service'
+        
