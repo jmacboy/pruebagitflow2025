@@ -38,6 +38,7 @@ namespace Inventory.WebApi.Controllers
         {
             try
             {
+                SentrySdk.CaptureMessage("Hello Sentry");
                 var result = await _mediator.Send(new GetItemsQuery(""));
                 return Ok(result);
             }
